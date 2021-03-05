@@ -7,9 +7,13 @@
 ul {
 	list-style: none;
 }
+canvas {
+	visibility: hidden;
+}
 #main-app {
 	text-align: center;
 }
+
 .chart-container {
 	position: relative;
 	margin: auto;
@@ -42,7 +46,7 @@ button:hover {
 	padding: 10px;
 }
 .cases {
-	visibility: visible;
+	visibility: hidden;
 }
 .countries-container {
 	display: flex;

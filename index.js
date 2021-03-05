@@ -65,6 +65,8 @@ const chart = new Chart(ctx, {
 		],
 	},
 });
+
+//! update chart
 const updateChart = (contArg = currentCont, dataType = currentCase) => {
     countriesContainer.innerHTML = '';
 	currentCont = contArg;
@@ -91,9 +93,14 @@ const updateChart = (contArg = currentCont, dataType = currentCase) => {
     chart.update();
 };
 
+const displayCases = document.querySelector('.cases')
 const continentButton = document.querySelectorAll('.continents > button')
+const canvas = document.querySelector('canvas');
+
 continentButton.forEach((el) => {
 	el.addEventListener('click', (e) => {
+        displayCases.style.visibility = 'visible';
+        canvas.style.visibility = 'visible';
         currentCont = e.target.className;
 		updateChart(currentCont, currentCase);
 	});
@@ -102,6 +109,8 @@ continentButton.forEach((el) => {
 const casesButton = document.querySelectorAll('.cases > button')
 casesButton.forEach((el) => {
 	el.addEventListener('click', (e) => {
+        displayCases.style.visibility = 'visible';
+		canvas.style.visibility = 'visible';
         currentCase = e.target.className; 
 		updateChart(currentCont, currentCase);
 	});
