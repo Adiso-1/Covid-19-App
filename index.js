@@ -5,11 +5,14 @@ const continents = {
   africa: {},
   world: {},
 };
+// getting specific data on country with country-code
+const countryCode = {};
 const countriesIdentifier = async () => {
     const fetchData = await fetch("https://cors.bridged.cc/https://restcountries.herokuapp.com/api/v1/");
     const country = await fetchData.json();
     country.forEach((e) => {
         continents.world[e.cca2] = { country: e.name.common };
+        // countryCode.
         if (e.region === "Asia") {
           continents.asia[e.cca2] = { country: e.name.common };
         } else if (e.region === "Europe") {
@@ -96,13 +99,42 @@ const updateChart = (contArg = currentCont, dataType = currentCase) => {
 const displayCases = document.querySelector('.cases')
 const continentButton = document.querySelectorAll('.continents > button')
 const canvas = document.querySelector('canvas');
+const countryDetailsContainer = document.querySelector('.country-details-container');
+const chartContainer = document.querySelector('.chart-container');
 
-continentButton.forEach((el) => {
-	el.addEventListener('click', (e) => {
+// boxes of data per country
+const totalCases = document.querySelector('.total-cases > h2');
+const totalDeaths = document.querySelector('.total-deaths > h2');
+const recovered = document.querySelector('.total-recovered > h2');
+const newCases = document.querySelector('.new-cases > h2');
+const newDeaths = document.querySelector('.new-deaths > h2');
+const critical = document.querySelector('.critical > h2');
+
+continentButton.forEach((cont) => {
+    cont.addEventListener('click', (e) => {
         displayCases.style.visibility = 'visible';
         canvas.style.visibility = 'visible';
         currentCont = e.target.className;
 		updateChart(currentCont, currentCase);
+        const country = document.querySelectorAll('.country');
+        country.forEach((country) => {
+            country.addEventListener('click', (e) => {
+                countryDetailsContainer.style.display = 'block';
+                chartContainer.style.display = 'none';
+                const header = document.querySelector('.country-details-container .header');
+                header.textContent = e.target.textContent;
+                Object.values(continents[cont.textContent.toLocaleLowerCase()]).forEach((data)=> {
+                    if (data.country === e.target.textContent) {
+                        totalCases.textContent = data.confirmed;
+                        newCases.textContent = data.today.confirmed;
+                        totalDeaths.textContent = data.deaths;
+                        newDeaths.textContent = data.today.deaths;
+                        recovered.textContent = data.recovered;
+                        critical.textContent = data.critical;
+                    }
+                });
+            })
+        })
 	});
 });
 

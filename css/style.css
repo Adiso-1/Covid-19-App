@@ -7,9 +7,6 @@
 ul {
 	list-style: none;
 }
-canvas {
-	visibility: hidden;
-}
 #main-app {
 	text-align: center;
 }
@@ -19,6 +16,9 @@ canvas {
 	margin: auto;
 	height: 70vh;
 	width: 70vw;
+	display: block;
+	/* display: none; */
+	visibility: hidden;
 }
 .header {
 	padding: 10px;
@@ -50,7 +50,7 @@ button:hover {
 }
 .countries-container {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 	text-align: left;
 	padding-top: 10px;
 	line-height: 1.3rem;
@@ -58,6 +58,7 @@ button:hover {
 
 ul {
 	padding: 5px;
+	width: 150px;
 }
 li {
 	list-style: none;
@@ -66,4 +67,27 @@ li {
 li:hover {
 	text-decoration: underline;
 	color: #128bb5;
+}
+
+.country-details-container {
+	text-align: center;
+	display: none;
+	/* display: block; */
+}
+.country-details {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+	grid-gap: 10px;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 40px;
+}
+.country-details > div {
+	border: 1px solid black;
+	padding: 20px;
+	text-align: center;
+}
+h1 {
+	padding: 10px;
 }
