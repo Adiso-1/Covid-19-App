@@ -2,6 +2,7 @@
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
 }
 #main-app {
 	text-align: center;
@@ -9,9 +10,34 @@
 .chart-container {
 	position: relative;
 	margin: auto;
-	height: 80vh;
-	width: 80vw;
+	height: 70vh;
+	width: 70vw;
 }
 .header {
 	padding: 10px;
+}
+button {
+	min-width: 10vw;
+	font-size: 1rem;
+	padding: 3px;
+	color: #fff;
+	margin: 0 10px;
+	outline: none;
+	background: black;
+	border: none;
+	border-radius: 5px;
+	border: 1px solid transparent;
+	cursor: pointer;
+}
+button:hover {
+	background: #fff;
+	color: #000;
+	border: 1px solid #000;
+}
+.cases,
+.continents {
+	padding: 10px;
+}
+.cases {
+	visibility: visible;
 }

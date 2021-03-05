@@ -1,21 +1,21 @@
 const continents = {
-  Asia: {},
-  Europe: {},
-  Americas: {},
-  Africa: {},
+  asia: {},
+  europe: {},
+  americas: {},
+  africa: {},
 };
 const countriesIdentifier = async () => {
     const fetchData = await fetch("https://cors.bridged.cc/https://restcountries.herokuapp.com/api/v1/");
     const country = await fetchData.json();
     country.forEach((e) => {
         if (e.region === "Asia") {
-          continents.Asia[e.cca2] = { country: e.name.common };
+          continents.asia[e.cca2] = { country: e.name.common };
         } else if (e.region === "Europe") {
-          continents.Europe[e.cca2] = { country: e.name.common };
+          continents.europe[e.cca2] = { country: e.name.common };
         } else if (e.region === "Americas") {
-          ;continents.Americas[e.cca2] = { country: e.name.common }
+          ;continents.americas[e.cca2] = { country: e.name.common }
         } else {
-          continents.Africa[e.cca2] = { country: e.name.common };
+          continents.africa[e.cca2] = { country: e.name.common };
         }
     })
     countriesCovidData().catch((err) => console.log(err));
@@ -42,23 +42,45 @@ const countriesCovidData = async () => {
     });
 };
 
-const createChart = (contArg,dataType = 'confirmed') => {
-    const ctx = document.querySelector('#chart').getContext('2d');
-    const labels = Object.keys(continents[contArg]).map((el) => continents[contArg][el].country);
-    const data = Object.keys(continents[contArg]).map((el) => continents[contArg][el][dataType]);
-    const chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels,
-            datasets: [
-                {
-                    label: `Covid 19 - ${dataType}`,
-                    backgroundColor: 'rgba(255, 99, 132,0.3)',
-                    borderColor: '#8D39FA',
-                    data,
-                },
-            ],
-        },
-        options: {},    
-    });
-}
+let currentCont = 'americas';
+let currentCase = 'confirmed';
+const createChart = (contArg = currentCont, dataType = currentCase) => {
+	currentCont = contArg;
+	const ctx = document.querySelector('#chart').getContext('2d');
+	const labels = Object.keys(continents[contArg]).map(
+		(el) => continents[contArg][el].country
+	);
+	const data = Object.keys(continents[contArg]).map(
+		(el) => continents[contArg][el][dataType]
+	);
+	const chart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels,
+			datasets: [
+				{
+					label: `Covid 19 - ${dataType}`,
+					backgroundColor: 'rgba(255, 99, 132,0.3)',
+					borderColor: '#8D39FA',
+					data,
+				},
+			],
+		},
+		options: {},
+	});
+};
+const continentButton = document.querySelectorAll('.continents > button')
+continentButton.forEach((el) => {
+	el.addEventListener('click', (e) => {
+        currentCont = e.target.className;
+		createChart(currentCont, currentCase);
+	});
+});
+
+const casesButton = document.querySelectorAll('.cases > button')
+casesButton.forEach((el) => {
+	el.addEventListener('click', (e) => {
+        currentCase = e.target.className; 
+		createChart(currentCont, currentCase);
+	});
+});
