@@ -44,30 +44,43 @@ const countriesCovidData = async () => {
 
 let currentCont = 'americas';
 let currentCase = 'confirmed';
+const countriesContainer = document.querySelector('.countries-container');
+
+
 const createChart = (contArg = currentCont, dataType = currentCase) => {
+    countriesContainer.innerHTML = '';
 	currentCont = contArg;
 	const ctx = document.querySelector('#chart').getContext('2d');
-	const labels = Object.keys(continents[contArg]).map(
-		(el) => continents[contArg][el].country
-	);
-	const data = Object.keys(continents[contArg]).map(
-		(el) => continents[contArg][el][dataType]
-	);
+	const labels = Object.keys(continents[contArg]).map((el) => continents[contArg][el].country);
+	const data = Object.keys(continents[contArg]).map((el) => continents[contArg][el][dataType]);
 	const chart = new Chart(ctx, {
 		type: 'line',
 		data: {
 			labels,
 			datasets: [
-				{
-					label: `Covid 19 - ${dataType}`,
+                {
+                    label: `Covid 19 - ${dataType}`,
 					backgroundColor: 'rgba(255, 99, 132,0.3)',
 					borderColor: '#8D39FA',
 					data,
 				},
 			],
 		},
-		options: {},
 	});
+    chart.update()
+    counter = 0;
+    for (let i = 0; i < labels.length / 10; i++) {
+        const ul = document.createElement('ul');
+        ul.classList.add('counties-list');
+        for (let j = 0; j < 10; j++) {
+            const li = document.createElement('li');
+            li.classList.add('country');
+            li.textContent = labels[counter];
+            ul.appendChild(li);
+            counter++
+        }
+        countriesContainer.appendChild(ul)
+    }
 };
 const continentButton = document.querySelectorAll('.continents > button')
 continentButton.forEach((el) => {
