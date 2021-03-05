@@ -10,9 +10,9 @@ const countryCode = {};
 const countriesIdentifier = async () => {
     const fetchData = await fetch("https://cors.bridged.cc/https://restcountries.herokuapp.com/api/v1/");
     const country = await fetchData.json();
+    console.log(country);
     country.forEach((e) => {
         continents.world[e.cca2] = { country: e.name.common };
-        // countryCode.
         if (e.region === "Asia") {
           continents.asia[e.cca2] = { country: e.name.common };
         } else if (e.region === "Europe") {
@@ -31,6 +31,7 @@ countriesIdentifier().catch((err) => console.log(err));
 const countriesCovidData = async () => {
     const fetchData = await fetch("https://corona-api.com/countries");
     const country = await fetchData.json();
+    console.log(country.data);
     Object.keys(continents).forEach((cont) => {
         country.data.forEach((el) => {
             if (!continents[cont][el.code]) {
@@ -147,3 +148,10 @@ casesButton.forEach((el) => {
 		updateChart(currentCont, currentCase);
 	});
 });
+
+//! back btn
+const backButton = document.querySelector('.back-btn');
+backButton.addEventListener('click', (e) => {
+    countryDetailsContainer.style.display = 'none';
+	chartContainer.style.display = 'block';
+})

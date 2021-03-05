@@ -14,10 +14,9 @@ ul {
 .chart-container {
 	position: relative;
 	margin: auto;
-	height: 70vh;
+	/* height: 70vh; */
 	width: 70vw;
 	display: block;
-	/* display: none; */
 	visibility: hidden;
 }
 .header {
@@ -72,7 +71,7 @@ li:hover {
 .country-details-container {
 	text-align: center;
 	display: none;
-	/* display: block; */
+	position: relative;
 }
 .country-details {
 	display: grid;
@@ -90,4 +89,10 @@ li:hover {
 }
 h1 {
 	padding: 10px;
+}
+.back-btn {
+	display: flex;
+	justify-content: center;
+	width: auto;
+	position: absolute;
 }
