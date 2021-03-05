@@ -3,11 +3,13 @@ const continents = {
   europe: {},
   americas: {},
   africa: {},
+  world: {},
 };
 const countriesIdentifier = async () => {
     const fetchData = await fetch("https://cors.bridged.cc/https://restcountries.herokuapp.com/api/v1/");
     const country = await fetchData.json();
     country.forEach((e) => {
+        continents.world[e.cca2] = { country: e.name.common };
         if (e.region === "Asia") {
           continents.asia[e.cca2] = { country: e.name.common };
         } else if (e.region === "Europe") {
@@ -17,6 +19,7 @@ const countriesIdentifier = async () => {
         } else {
           continents.africa[e.cca2] = { country: e.name.common };
         }
+        
     })
     countriesCovidData().catch((err) => console.log(err));
 }
