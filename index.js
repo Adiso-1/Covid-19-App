@@ -46,28 +46,32 @@ let currentCont = 'americas';
 let currentCase = 'confirmed';
 const countriesContainer = document.querySelector('.countries-container');
 
-
-const createChart = (contArg = currentCont, dataType = currentCase) => {
+//! create chart
+const ctx = document.querySelector('#chart').getContext('2d');
+const chart = new Chart(ctx, {
+	type: 'line',
+	data: {
+		labels: [],
+		datasets: [
+			{
+				label: ``,
+				backgroundColor: 'rgba(255, 99, 132,0.3)',
+				borderColor: '#8D39FA',
+				data: [],
+			},
+		],
+	},
+});
+const updateChart = (contArg = currentCont, dataType = currentCase) => {
     countriesContainer.innerHTML = '';
 	currentCont = contArg;
-	const ctx = document.querySelector('#chart').getContext('2d');
 	const labels = Object.keys(continents[contArg]).map((el) => continents[contArg][el].country);
+    chart.data.labels = labels;
 	const data = Object.keys(continents[contArg]).map((el) => continents[contArg][el][dataType]);
-	const chart = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels,
-			datasets: [
-                {
-                    label: `Covid 19 - ${dataType}`,
-					backgroundColor: 'rgba(255, 99, 132,0.3)',
-					borderColor: '#8D39FA',
-					data,
-				},
-			],
-		},
-	});
-    chart.update()
+    chart.data.datasets[0].data = data;
+    chart.data.datasets[0].label = `Covid 19 - ${dataType}`;
+
+    // create countris list
     counter = 0;
     for (let i = 0; i < labels.length / 10; i++) {
         const ul = document.createElement('ul');
@@ -81,12 +85,14 @@ const createChart = (contArg = currentCont, dataType = currentCase) => {
         }
         countriesContainer.appendChild(ul)
     }
+    chart.update();
 };
+
 const continentButton = document.querySelectorAll('.continents > button')
 continentButton.forEach((el) => {
 	el.addEventListener('click', (e) => {
         currentCont = e.target.className;
-		createChart(currentCont, currentCase);
+		updateChart(currentCont, currentCase);
 	});
 });
 
@@ -94,6 +100,6 @@ const casesButton = document.querySelectorAll('.cases > button')
 casesButton.forEach((el) => {
 	el.addEventListener('click', (e) => {
         currentCase = e.target.className; 
-		createChart(currentCont, currentCase);
+		updateChart(currentCont, currentCase);
 	});
 });
