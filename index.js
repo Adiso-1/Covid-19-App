@@ -114,6 +114,7 @@ const targetCountry = () => {
     const country = document.querySelectorAll('.country');
     country.forEach((country) => {
         country.addEventListener('click', (e) => {
+            landscape.style.display = 'none';
             countryDetailsContainer.style.display = 'block';
             chartContainer.style.display = 'none';
             const header = document.querySelector('.country-details-container .header');
@@ -162,3 +163,4 @@ backButton.addEventListener('click', (e) => {
     countryDetailsContainer.style.display = 'none';
 	chartContainer.style.display = 'block';
 })
+const landscape = document.querySelector('.landscape');
