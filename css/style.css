@@ -14,7 +14,6 @@ ul {
 .chart-container {
 	position: relative;
 	margin: auto;
-	/* height: 70vh; */
 	width: 70vw;
 	display: block;
 	visibility: hidden;
@@ -37,6 +36,7 @@ button:hover {
 	background: #fff;
 	color: #000;
 	border: 1px solid #000;
+	transition: all 0.2s;
 }
 .cases,
 .continents {
@@ -65,6 +65,7 @@ li {
 li:hover {
 	text-decoration: underline;
 	color: #128bb5;
+	transition: all 0.2s;
 }
 
 .country-details-container {
@@ -91,22 +92,35 @@ h1 {
 }
 .back-btn {
 	display: flex;
-	justify-content: center;
-	width: auto;
+	justify-content: space-evenly;
+	min-width: 90px;
 	position: absolute;
 }
-@media only screen and (max-width: 650px) {
-	#main-app {
-		background: url('/img/turn-to-landscape.gif') no-repeat center center/cover;
-		height: 100vh;
-		width: 100vw;
+.fas {
+	font-size: 10px;
+	margin-top: 5px;
+}
+.landscape {
+	position: absolute;
+	display: none;
+	width: 20px;
+	top: 0;
+	right: 0;
+}
+@media only screen and (max-width: 450px) {
+	.continents,
+	.cases {
+		display: flex;
+		justify-content: space-around;
 	}
-	#main-app > .header,
-	#main-app > .continents {
-		display: none;
+	button {
+		margin: 0;
+	}
+	.landscape {
+		display: block;
 	}
 }
-@media only screen and (min-width: 650px) and (max-width: 850px) {
+@media only screen and (max-width: 850px) {
 	.chart-container {
 		width: 85vw;
 	}
