@@ -19,9 +19,7 @@ ul {
 	display: block;
 	visibility: hidden;
 }
-.header {
-	padding: 10px;
-}
+
 button {
 	min-width: 10vw;
 	font-size: 1rem;

@@ -111,41 +111,50 @@ const newCases = document.querySelector('.new-cases > h2');
 const newDeaths = document.querySelector('.new-deaths > h2');
 const critical = document.querySelector('.critical > h2');
 
+const targetCountry = () => {
+    const country = document.querySelectorAll('.country');
+    country.forEach((country) => {
+        country.addEventListener('click', (e) => {
+            countryDetailsContainer.style.display = 'block';
+            chartContainer.style.display = 'none';
+            const header = document.querySelector('.country-details-container .header');
+            header.textContent = e.target.textContent;
+            Object.values(continents[currentCont.toLocaleLowerCase()]).forEach(
+							(data) => {
+								if (data.country === e.target.textContent) {
+									totalCases.textContent = data.confirmed;
+									newCases.textContent = data.today.confirmed;
+									totalDeaths.textContent = data.deaths;
+									newDeaths.textContent = data.today.deaths;
+									recovered.textContent = data.recovered;
+									critical.textContent = data.critical;
+								}
+							}
+						);
+        }
+    );
+    });
+
+}
+
 continentButton.forEach((cont) => {
     cont.addEventListener('click', (e) => {
         displayCases.style.visibility = 'visible';
         canvas.style.visibility = 'visible';
         currentCont = e.target.className;
 		updateChart(currentCont, currentCase);
-        const country = document.querySelectorAll('.country');
-        country.forEach((country) => {
-            country.addEventListener('click', (e) => {
-                countryDetailsContainer.style.display = 'block';
-                chartContainer.style.display = 'none';
-                const header = document.querySelector('.country-details-container .header');
-                header.textContent = e.target.textContent;
-                Object.values(continents[cont.textContent.toLocaleLowerCase()]).forEach((data)=> {
-                    if (data.country === e.target.textContent) {
-                        totalCases.textContent = data.confirmed;
-                        newCases.textContent = data.today.confirmed;
-                        totalDeaths.textContent = data.deaths;
-                        newDeaths.textContent = data.today.deaths;
-                        recovered.textContent = data.recovered;
-                        critical.textContent = data.critical;
-                    }
-                });
-            })
-        })
+        targetCountry();
 	});
 });
 
 const casesButton = document.querySelectorAll('.cases > button')
 casesButton.forEach((el) => {
-	el.addEventListener('click', (e) => {
+    el.addEventListener('click', (e) => {
         displayCases.style.visibility = 'visible';
 		canvas.style.visibility = 'visible';
         currentCase = e.target.className; 
 		updateChart(currentCont, currentCase);
+        targetCountry();
 	});
 });
 
