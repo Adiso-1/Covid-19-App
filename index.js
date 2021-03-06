@@ -6,11 +6,9 @@ const continents = {
   world: {},
 };
 // getting specific data on country with country-code
-const countryCode = {};
 const countriesIdentifier = async () => {
     const fetchData = await fetch("https://cors.bridged.cc/https://restcountries.herokuapp.com/api/v1/");
     const country = await fetchData.json();
-    console.log(country);
     country.forEach((e) => {
         continents.world[e.cca2] = { country: e.name.common };
         if (e.region === "Asia") {
@@ -22,16 +20,15 @@ const countriesIdentifier = async () => {
         } else {
           continents.africa[e.cca2] = { country: e.name.common };
         }
-        
     })
     countriesCovidData().catch((err) => console.log(err));
 }
 countriesIdentifier().catch((err) => console.log(err));
 
+
 const countriesCovidData = async () => {
     const fetchData = await fetch("https://corona-api.com/countries");
     const country = await fetchData.json();
-    console.log(country.data);
     Object.keys(continents).forEach((cont) => {
         country.data.forEach((el) => {
             if (!continents[cont][el.code]) {
@@ -47,6 +44,8 @@ const countriesCovidData = async () => {
             };
         });
     });
+    //! deleting Kosovo
+    delete continents.europe.XK;
 };
 
 let currentCont = 'americas';
@@ -119,18 +118,17 @@ const targetCountry = () => {
             chartContainer.style.display = 'none';
             const header = document.querySelector('.country-details-container .header');
             header.textContent = e.target.textContent;
-            Object.values(continents[currentCont.toLocaleLowerCase()]).forEach(
-							(data) => {
-								if (data.country === e.target.textContent) {
-									totalCases.textContent = data.confirmed;
-									newCases.textContent = data.today.confirmed;
-									totalDeaths.textContent = data.deaths;
-									newDeaths.textContent = data.today.deaths;
-									recovered.textContent = data.recovered;
-									critical.textContent = data.critical;
-								}
-							}
-						);
+            Object.values(continents[currentCont.toLocaleLowerCase()]).forEach((data) => {
+                    if (data.country === e.target.textContent) {
+                        totalCases.textContent = data.confirmed;
+                        newCases.textContent = data.today.confirmed;
+                        totalDeaths.textContent = data.deaths;
+                        newDeaths.textContent = data.today.deaths;
+                        recovered.textContent = data.recovered;
+                        critical.textContent = data.critical;
+                    }
+                }
+            );
         }
     );
     });
